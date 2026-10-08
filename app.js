@@ -1,12 +1,12 @@
 /**
  * KRONOS ENTERPRISE ENGINE
- * Importación Dinámica desde src/data/products.js, Sanitización DOM Anti-XSS y Scroll Restoration
+ * Dynamic Import from src/data/products.js, Toast Notification System, Sort Filter & Anti-XSS
  */
 
 import { CATALOGO_KRONOS } from './src/data/products.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Carga e higienización inicial del catálogo estático
+    // Carga de catálogo estático e higienizado
     const products = CATALOGO_KRONOS.map(p => ({
         ...p,
         images: p.images && p.images.length > 0 ? p.images : ['assets/images/placeholder.webp'],
@@ -16,17 +16,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // Estado Interno
     let currentGender = 'all';
     let currentCategory = 'all';
+    let currentSort = 'default';
     let lastScrollPosition = 0;
     let lastSelectedProductId = null;
     let selectedSizeForCurrentProduct = null;
 
-    // Referencias DOM
+    // DOM
     const homeView = document.getElementById('home-view');
     const detailView = document.getElementById('detail-view');
     const productGrid = document.getElementById('productGrid');
     const searchInput = document.getElementById('searchInput');
     const genderFilterButtons = document.querySelectorAll('.gender-btn');
     const categoryFilterButtons = document.querySelectorAll('.category-btn');
+    const sortSelect = document.getElementById('sortSelect');
     const noResults = document.getElementById('noResults');
     const mobileMenu = document.getElementById('mobile-menu');
     const mobileToggle = document.getElementById('mobile-menu-toggle');
@@ -34,8 +36,38 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnBackCatalog = document.getElementById('btn-back-catalog');
     const btnCloseDetail = document.getElementById('btn-close-detail');
 
+    // Contenedor Toast para Notificaciones
+    const toastContainer = document.createElement('div');
+    toastContainer.id = 'toast-container';
+    document.body.appendChild(toastContainer);
+
     /* ==========================================
-       1. SEGURIDAD Y RESOLUCIÓN DE RUTA DE IMAGEN
+       1. SISTEMA DE TOAST NOTIFICATIONS
+    ========================================== */
+
+    function showToast(message, icon = 'fa-check-circle') {
+        const toast = document.createElement('div');
+        toast.className = 'toast-notification';
+        toast.innerHTML = `<i class="fas ${icon} text-gold-500"></i> <span>${escapeHTML(message)}</span>`;
+        
+        toastContainer.appendChild(toast);
+
+        setTimeout(() => {
+            toast.style.opacity = '0';
+            toast.style.transform = 'translateX(100%)';
+            toast.style.transition = 'all 0.3s ease';
+            setTimeout(() => toast.remove(), 300);
+        }, 3000);
+    }
+
+    function escapeHTML(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    /* ==========================================
+       2. SEGURIDAD Y RESOLUCIÓN DE RUTA DE IMAGEN
     ========================================== */
 
     function getSecureImageUrl(url) {
@@ -63,7 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================
-       2. NAVEGACIÓN Y RESTAURACIÓN DE SCROLL
+       3. NAVEGACIÓN Y RESTAURACIÓN DE SCROLL
     ========================================== */
 
     function openDetailView(productId, pushHistory = true) {
@@ -133,13 +165,13 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================
-       3. RENDERIZADO CON SANITIZACIÓN DOM SEGURA
+       4. RENDERIZADO Y ORDENAMIENTO
     ========================================== */
 
     function renderProducts(filterText = '') {
         const query = filterText.toLowerCase();
 
-        const filtered = products.filter(p => {
+        let filtered = products.filter(p => {
             const matchesSearch = p.name.toLowerCase().includes(query) || 
                                  p.desc.toLowerCase().includes(query) ||
                                  p.gender.toLowerCase().includes(query) ||
@@ -150,6 +182,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             return matchesSearch && matchesGender && matchesCategory;
         });
+
+        // Ordenamiento dinámico
+        if (currentSort === 'price-asc') {
+            filtered.sort((a, b) => a.price - b.price);
+        } else if (currentSort === 'price-desc') {
+            filtered.sort((a, b) => b.price - a.price);
+        } else if (currentSort === 'name-asc') {
+            filtered.sort((a, b) => a.name.localeCompare(b.name));
+        }
 
         productGrid.innerHTML = '';
         
@@ -174,8 +215,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <img src="${coverImg}" alt="" loading="lazy" decoding="async" width="800" height="600">
                         
                         <div class="absolute top-5 right-5 flex flex-col items-end gap-1.5 z-10 font-sans">
-                            <span class="bg-gold-500 text-obsidian-950 text-[9px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-widest shadow-xl">${p.gender}</span>
-                            <span class="bg-obsidian-900/90 backdrop-blur text-stone-200 text-[8px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-white/10">${p.category}</span>
+                            <span class="bg-gold-500 text-obsidian-950 text-[9px] font-black px-3.5 py-1.5 rounded-full uppercase tracking-widest shadow-xl">${escapeHTML(p.gender)}</span>
+                            <span class="bg-obsidian-900/90 backdrop-blur text-stone-200 text-[8px] font-bold px-3 py-1 rounded-full uppercase tracking-wider border border-white/10">${escapeHTML(p.category)}</span>
                         </div>
                     </div>
                     <div class="p-8 flex flex-col flex-grow">
@@ -200,7 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                 `;
 
-                // Sanitización estricta por manipulación directa de nodos del DOM
                 const imgEl = card.querySelector('img');
                 imgEl.alt = p.name;
                 imgEl.onerror = () => { imgEl.src = 'assets/images/placeholder.webp'; };
@@ -276,6 +316,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 pill.classList.add('active');
                 selectedSizeForCurrentProduct = sz;
                 sizeLabel.textContent = `Talla seleccionada: ${sz}`;
+                showToast(`Talla ${sz} seleccionada`, 'fa-check');
                 updateWhatsAppLink(product);
             });
 
@@ -301,7 +342,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /* ==========================================
-       4. LISTENERS DE EVENTOS Y BÚSQUEDA
+       5. LISTENERS Y EVENTOS
     ========================================== */
 
     document.querySelectorAll('[data-nav-section]').forEach(btn => {
@@ -315,6 +356,13 @@ document.addEventListener('DOMContentLoaded', () => {
     mobileToggle.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
     btnBackCatalog.addEventListener('click', goBackToCatalog);
     btnCloseDetail.addEventListener('click', goBackToCatalog);
+
+    if (sortSelect) {
+        sortSelect.addEventListener('change', (e) => {
+            currentSort = e.target.value;
+            renderProducts(searchInput.value);
+        });
+    }
 
     genderFilterButtons.forEach(btn => {
         btn.addEventListener('click', () => {
