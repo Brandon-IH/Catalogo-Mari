@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KRONOS | High-Fashion & Luxury Atelier</title>
+
+    <!-- Content Security Policy (CSP) Estricta -->
+    <meta http-equiv="Content-Security-Policy" 
+          content="default-src 'self' https:; 
+                   img-src 'self' https://images.unsplash.com https://wa.me data:; 
+                   style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; 
+                   font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; 
+                   script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com;
+                   connect-src 'self' https://formspree.io;">
+
+    <!-- Tailwind CSS CDN Configurado -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        alabaster: { 50: '#F7F6F2', 100: '#EFECE6', 200: '#E2DDD5' },
+                        obsidian: { 950: '#0C0C0E', 900: '#121114', 800: '#1D1C21', 700: '#2A2930' },
+                        gold: { 500: '#C5A059', 600: '#B88E44', light: '#E8D2A0' }
+                    },
+                    fontFamily: {
+                        editorial: ['Cormorant Garamond', 'serif'],
+                        display: ['Syne', 'sans-serif'],
+                        sans: ['Plus Jakarta Sans', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome Icons & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+    
+    <!-- Hoja de Estilos Personalizada -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-alabaster-50 text-obsidian-950 antialiased selection:bg-gold-500 selection:text-white overflow-x-hidden">
+
+    <!-- Navegación Superior -->
+    <nav class="bg-white/90 backdrop-blur-2xl border-b border-stone-200 sticky top-0 z-50 transition-all duration-300 shadow-sm" id="main-navbar">
+        <div class="max-w-7xl mx-auto px-6 lg:px-12">
+            <div class="flex justify-between h-24 items-center">
+                <!-- Logotipo de la Firma -->
+                <div class="flex items-center gap-4 cursor-pointer group" id="brand-logo" role="button" aria-label="Kronos Home">
+                    <div class="bg-obsidian-950 p-3 rounded-2xl text-gold-500 group-hover:scale-105 transition-all shadow-xl shadow-obsidian-950/10 border border-gold-500/30">
+                        <i class="fas fa-gem text-xl"></i>
+                    </div>
+                    <div class="flex flex-col">
+                        <span class="font-editorial font-bold text-3xl text-obsidian-950 tracking-[0.2em] uppercase leading-none">KRONOS</span>
+                        <span class="text-[9px] text-gold-600 uppercase tracking-[0.45em] font-black mt-1 font-sans">HAUTE COUTURE & SNEAKERS</span>
+                    </div>
+                </div>
+
+                <!-- Enlaces Desktop -->
+                <div class="hidden md:flex items-center space-x-12 font-extrabold text-stone-700 text-[11px] tracking-[0.25em] uppercase font-sans">
+                    <button data-nav-section="inicio" class="nav-link hover:text-gold-600 transition-colors">Inicio</button>
+                    <button data-nav-section="nosotros" class="nav-link hover:text-gold-600 transition-colors">La Maison</button>
+                    <button data-nav-section="catalogo" class="nav-link hover:text-gold-600 transition-colors">Colección</button>
+                    <button data-nav-section="contacto" class="btn-shimmer bg-obsidian-950 text-gold-500 hover:bg-gold-500 hover:text-obsidian-950 px-8 py-3.5 rounded-full transition-all shadow-xl shadow-obsidian-950/10 font-black tracking-[0.2em] border border-gold-500/30">
+                        Atención VIP
+                    </button>
+                </div>
+
+                <!-- Botón Móvil -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-toggle" aria-label="Abrir Menú" class="text-obsidian-950 hover:text-gold-600 p-2 focus:outline-none">
+                        <i class="fas fa-bars-staggered text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Menú Móvil -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-b border-stone-200 px-6 py-6 space-y-5 font-sans">
+            <button data-nav-section="inicio" class="mobile-nav-btn block w-full text-left font-bold text-obsidian-950 text-base">Inicio</button>
+            <button data-nav-section="nosotros" class="mobile-nav-btn block w-full text-left font-bold text-obsidian-950 text-base">La Maison</button>
+            <button data-nav-section="catalogo" class="mobile-nav-btn block w-full text-left font-bold text-obsidian-950 text-base">Colección</button>
+            <button data-nav-section="contacto" class="mobile-nav-btn block w-full text-center bg-obsidian-950 text-gold-500 py-4 rounded-xl font-black uppercase tracking-widest text-xs">Atención VIP</button>
+        </div>
+    </nav>
+
+    <!-- VISTA PRINCIPAL -->
+    <main id="home-view" class="fade-in">
+        <!-- Hero Section Chic -->
+        <header id="inicio" class="relative min-h-[88vh] flex items-center justify-center text-obsidian-950 overflow-hidden bg-alabaster-50 border-b border-stone-200">
+            <div class="absolute inset-0">
+                <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?auto=format&fit=crop&w=1920&q=80" 
+                     alt="KRONOS Haute Couture Editorial" 
+                     loading="eager" 
+                     width="1920" 
+                     height="1080"
+                     class="w-full h-full object-cover opacity-15 scale-105 animate-pulse-slow">
+                <div class="absolute inset-0 bg-gradient-to-t from-alabaster-50 via-alabaster-50/70 to-transparent"></div>
+            </div>
+
+            <div class="relative z-10 text-center px-6 max-w-6xl mx-auto py-24">
+                <div class="inline-flex items-center gap-3 bg-white border border-stone-200 px-8 py-2.5 rounded-full mb-10 shadow-md">
+                    <span class="w-2.5 h-2.5 rounded-full bg-gold-500 animate-ping"></span>
+                    <span class="uppercase tracking-[0.4em] text-gold-600 font-extrabold text-[10px] font-sans">Private Drop Edition 2026</span>
+                </div>
+                
+                <h1 class="text-6xl sm:text-8xl md:text-9xl font-editorial tracking-tight leading-[0.9] mb-10 text-obsidian-950">
+                    KRONOS <br>
+                    <span class="italic font-normal text-gold-600">Haute Couture & Sneakers</span>
+                </h1>
+                
+                <p class="text-lg md:text-2xl text-stone-700 max-w-3xl mx-auto mb-14 font-normal leading-relaxed tracking-wide font-sans">
+                    Elegancia contemporánea y sofisticación sin esfuerzo. Tenis de alta gama, vestidos de gala, prendas exclusivas y accesorios para Hombre, Mujer, Niños y Niñas.
+                </p>
+                
+                <div class="flex flex-wrap justify-center gap-6 font-sans">
+                    <button data-nav-section="catalogo" class="btn-shimmer bg-obsidian-950 hover:bg-gold-500 hover:text-obsidian-950 text-stone-100 font-black px-12 py-5 rounded-full transition-all shadow-2xl hover:scale-105 uppercase tracking-[0.25em] text-xs border border-gold-500/30">
+                        Explorar Colección Privada
+                    </button>
+                    <button data-nav-section="nosotros" class="bg-white border border-stone-300 hover:bg-stone-100 text-obsidian-950 font-extrabold px-12 py-5 rounded-full transition-all uppercase tracking-[0.25em] text-xs shadow-sm">
+                        Conocer la Maison
+                    </button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Bento Grid Chic -->
+        <section id="nosotros" class="py-36 px-6 max-w-7xl mx-auto">
+            <div class="text-center max-w-3xl mx-auto mb-24">
+                <span class="text-gold-600 font-extrabold uppercase tracking-[0.4em] text-xs block mb-4 font-sans">El Arte de Vestir</span>
+                <h2 class="text-4xl md:text-7xl font-editorial text-obsidian-950 italic">Las Colecciones de la Casa</h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-2 relative min-h-[460px] rounded-[3rem] overflow-hidden group shadow-2xl border border-stone-200 bg-obsidian-950">
+                    <img src="https://images.unsplash.com/photo-1552346154-21d32810aba3?auto=format&fit=crop&w=1200&q=80" 
+                         alt="Luxury Sneakers Collection" loading="lazy" decoding="async" width="1200" height="800"
+                         class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-1000 opacity-80">
+                    <div class="absolute inset-0 bg-gradient-to-t from-obsidian-950 via-obsidian-950/40 to-transparent p-10 md:p-16 flex flex-col justify-end text-white">
+                        <span class="bg-gold-500 text-obsidian-950 text-[10px] uppercase tracking-[0.25em] font-black px-4 py-1.5 rounded-full w-max mb-4 font-sans">High-Performance Sneakers</span>
+                        <h3 class="text-3xl md:text-5xl font-editorial italic mb-4">Sneakers de Edición Limitada</h3>
+                        <p class="text-stone-300 font-normal text-sm md:text-base max-w-xl leading-relaxed font-sans">Calzado exclusivo diseñado con pieles seleccionadas, acabados artesanales y variedad de tallas.</p>
+                    </div>
+                </div>
+
+                <div class="bg-obsidian-950 text-white p-10 md:p-14 rounded-[3rem] shadow-xl flex flex-col justify-between border border-gold-500/20 relative overflow-hidden group">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-white/10 border border-white/10 flex items-center justify-center text-gold-500 text-2xl mb-10 group-hover:scale-110 transition-transform">
+                            <i class="fas fa-crown"></i>
+                        </div>
+                        <h3 class="text-3xl font-editorial italic mb-4 text-stone-100">Alta Costura & Vestidos</h3>
+                        <p class="text-stone-300 text-sm font-normal leading-relaxed font-sans">Siluetas contemporáneas y vestidos de gala para Mujer y Niñas elaborados con telas finas.</p>
+                    </div>
+                    <div class="pt-8 border-t border-white/10 text-xs uppercase tracking-[0.25em] text-gold-500 font-extrabold font-sans">
+                        Haute Couture Line
+                    </div>
+                </div>
+
+                <div class="bg-white p-10 md:p-14 rounded-[3rem] shadow-xl border border-stone-200 flex flex-col justify-between">
+                    <div>
+                        <div class="w-16 h-16 rounded-2xl bg-obsidian-950 text-gold-500 flex items-center justify-center text-2xl mb-10 shadow-lg">
+                            <i class="fas fa-child"></i>
+                        </div>
+                        <h3 class="text-3xl font-editorial italic text-obsidian-950 mb-4">Junior Atelier (Niños & Niñas)</h3>
+                        <p class="text-stone-600 text-sm font-normal leading-relaxed font-sans">La sofisticación de la marca adaptada con máxima comodidad en tallas infantiles especializadas.</p>
+                    </div>
+                    <span class="text-gold-600 font-editorial italic text-xl mt-6 block font-bold">KRONOS Junior Collection</span>
+                </div>
+
+                <div class="md:col-span-2 bg-gradient-to-r from-obsidian-950 via-obsidian-900 to-obsidian-950 text-white p-10 md:p-16 rounded-[3rem] shadow-2xl flex flex-col md:flex-row items-center justify-between gap-8 border border-gold-500/30">
+                    <div class="max-w-md">
+                        <span class="text-gold-500 font-extrabold uppercase tracking-[0.25em] text-xs mb-3 block font-sans">Accesorios de Firma</span>
+                        <h3 class="text-3xl md:text-4xl font-editorial italic mb-3">Complementos & Joyería</h3>
+                        <p class="text-stone-300 font-normal text-sm leading-relaxed font-sans">Bolsos, gafas de sol con protección UV total, joyería fina y accesorios chic.</p>
+                    </div>
+                    <button data-nav-section="catalogo" class="bg-gold-500 text-obsidian-950 font-black px-10 py-5 rounded-full hover:bg-white transition-all uppercase tracking-[0.2em] text-xs shrink-0 shadow-xl font-sans">
+                        Explorar Catálogo
+                    </button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Catálogo Destacado -->
+        <section id="catalogo" class="py-32 bg-alabaster-100 px-6 border-t border-b border-stone-200">
+            <div class="max-w-7xl mx-auto">
+                <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+                    <div>
+                        <span class="text-gold-600 font-extrabold uppercase tracking-[0.35em] text-xs block mb-3 font-sans">Piezas de Autor</span>
+                        <h2 class="text-4xl md:text-7xl font-editorial italic text-obsidian-950">Catálogo Privado</h2>
+                    </div>
+                    <p class="text-stone-600 max-w-md text-sm font-normal leading-relaxed font-sans">
+                        Selecciona el departamento o el tipo de prenda para consultar la disponibilidad de tallas y coordinar tu atención personal.
+                    </p>
+                </div>
+
+                <!-- Buscador y Filtros -->
+                <div class="space-y-6 mb-16 bg-white p-8 rounded-[3rem] border border-stone-200 shadow-xl font-sans">
+                    <div class="relative w-full">
+                        <i class="fas fa-search absolute left-6 top-1/2 -translate-y-1/2 text-stone-400 text-lg"></i>
+                        <input type="text" id="searchInput" placeholder="Buscar por tenis, vestidos, hombre, mujer, niños, accesorios..." 
+                               class="w-full pl-16 pr-6 py-5 bg-alabaster-50 border border-stone-200 rounded-2xl focus:ring-2 focus:ring-gold-500 text-obsidian-950 outline-none transition-all text-sm placeholder-stone-400 font-medium">
+                    </div>
+
+                    <div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar" id="genderFilterButtons">
+                        <span class="text-xs font-bold uppercase tracking-widest text-stone-500 self-center mr-2">Público:</span>
+                        <button class="gender-btn active bg-obsidian-950 text-gold-500 px-6 py-2.5 rounded-full text-xs font-black tracking-wider uppercase shadow transition-all whitespace-nowrap" data-gender="all">Todos</button>
+                        <button class="gender-btn bg-white text-stone-700 border border-stone-300 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase hover:border-gold-500 transition-all whitespace-nowrap" data-gender="Hombre">Hombre</button>
+                        <button class="gender-btn bg-white text-stone-700 border border-stone-300 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase hover:border-gold-500 transition-all whitespace-nowrap" data-gender="Mujer">Mujer</button>
+                        <button class="gender-btn bg-white text-stone-700 border border-stone-300 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase hover:border-gold-500 transition-all whitespace-nowrap" data-gender="Niños">Niños</button>
+                        <button class="gender-btn bg-white text-stone-700 border border-stone-300 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase hover:border-gold-500 transition-all whitespace-nowrap" data-gender="Niñas">Niñas</button>
+                    </div>
+
+                    <div class="flex gap-3 overflow-x-auto pb-2 no-scrollbar" id="categoryFilterButtons">
+                        <span class="text-xs font-bold uppercase tracking-widest text-stone-500 self-center mr-2">Prenda:</span>
+                        <button class="category-btn active bg-stone-800 text-white px-6 py-2.5 rounded-full text-xs font-black tracking-wider uppercase shadow transition-all whitespace-nowrap" data-category="all">Todas</button>
+                        <button class="category-btn bg-white text-stone-700 border border-stone-300 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase hover:border-gold-500 transition-all whitespace-nowrap" data-category="Tenis">Tenis</button>
+                        <button class="category-btn bg-white text-stone-700 border border-stone-300 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase hover:border-gold-500 transition-all whitespace-nowrap" data-category="Ropa">Ropa</button>
+                        <button class="category-btn bg-white text-stone-700 border border-stone-300 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase hover:border-gold-500 transition-all whitespace-nowrap" data-category="Vestidos">Vestidos</button>
+                        <button class="category-btn bg-white text-stone-700 border border-stone-300 px-6 py-2.5 rounded-full text-xs font-bold tracking-wider uppercase hover:border-gold-500 transition-all whitespace-nowrap" data-category="Accesorios">Accesorios</button>
+                    </div>
+                </div>
+
+                <!-- Grid de Productos -->
+                <div id="productGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"></div>
+                
+                <!-- Estado Vacío -->
+                <div id="noResults" class="hidden text-center py-28 text-stone-500 font-sans">
+                    <i class="fas fa-search text-6xl mb-6 text-gold-600/50"></i>
+                    <p class="text-2xl font-editorial font-bold text-obsidian-950 italic">No hay coincidencias en esta selección</p>
+                    <p class="text-xs text-stone-500 mt-2">Prueba combinando otros términos o modificando el género seleccionado.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto VIP -->
+        <section id="contacto" class="py-32 px-6 max-w-7xl mx-auto">
+            <div class="bg-obsidian-950 text-white rounded-[3.5rem] shadow-2xl overflow-hidden grid lg:grid-cols-5 border border-gold-500/20">
+                <div class="lg:col-span-2 bg-gradient-to-br from-obsidian-900 to-obsidian-950 p-12 md:p-16 flex flex-col justify-between border-r border-white/10">
+                    <div>
+                        <span class="text-gold-500 font-extrabold uppercase tracking-[0.35em] text-xs block mb-4 font-sans">Concierge KRONOS</span>
+                        <h3 class="text-4xl md:text-5xl font-editorial italic mb-8 leading-tight">Atención Privada</h3>
+                        <p class="text-stone-300 mb-12 font-normal leading-relaxed text-sm font-sans">
+                            ¿Requieres asesoría sobre guía de tallas, disponibilidad de lotes privados o envíos internacionales? Nuestro equipo responderá tu solicitud.
+                        </p>
+                        
+                        <ul class="space-y-8 font-sans">
+                            <li class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gold-500">
+                                    <i class="fas fa-phone"></i>
+                                </div>
+                                <span class="text-base font-bold text-stone-200">+52 33 9999 8888</span>
+                            </li>
+                            <li class="flex items-center gap-6">
+                                <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-gold-500">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <span class="text-base font-bold text-stone-200">vip@kronosatelier.com</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="mt-16 text-[10px] text-stone-500 uppercase tracking-[0.4em] font-extrabold font-sans">
+                        KRONOS Atelier Global 2026
+                    </div>
+                </div>
+
+                <div class="lg:col-span-3 p-12 md:p-16 bg-white text-obsidian-950 font-sans">
+                    <form action="https://formspree.io/f/mbdarpda" method="POST" class="space-y-8" id="contact-form">
+                        <div class="grid md:grid-cols-2 gap-8">
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-widest text-stone-500">Nombre Completo</label>
+                                <input type="text" name="nombre" required placeholder="Ej. Carlos Mendoza" 
+                                       class="w-full px-6 py-4 bg-alabaster-50 border border-stone-200 rounded-2xl outline-none focus:ring-2 focus:ring-gold-500 text-obsidian-950 text-sm font-medium">
+                            </div>
+                            <div class="space-y-2">
+                                <label class="text-xs font-bold uppercase tracking-widest text-stone-500">Correo Electrónico</label>
+                                <input type="email" name="_replyto" required placeholder="tu@correo.com" 
+                                       class="w-full px-6 py-4 bg-alabaster-50 border border-stone-200 rounded-2xl outline-none focus:ring-2 focus:ring-gold-500 text-obsidian-950 text-sm font-medium">
+                            </div>
+                        </div>
+                        <div class="space-y-2">
+                            <label class="text-xs font-bold uppercase tracking-widest text-stone-500">Consulta o Solicitud Especial</label>
+                            <textarea name="mensaje" rows="5" required placeholder="Detalla las prendas o tallas de tu interés..." 
+                                      class="w-full px-6 py-4 bg-alabaster-50 border border-stone-200 rounded-2xl outline-none focus:ring-2 focus:ring-gold-500 text-obsidian-950 resize-none text-sm font-medium"></textarea>
+                        </div>
+                        <button type="submit" class="btn-shimmer w-full bg-obsidian-950 text-gold-500 font-black py-5 rounded-2xl hover:bg-gold-500 hover:text-obsidian-950 transition-all uppercase tracking-[0.25em] shadow-2xl text-xs border border-gold-500/30">
+                            Enviar Solicitud VIP
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- VISTA DETALLE DE PRODUCTO CON GALERÍA Y SELECTOR DE TALLAS -->
+    <main id="detail-view" class="view-hidden fade-in py-12 md:py-24 px-6 min-h-screen bg-alabaster-50">
+        <div class="max-w-7xl mx-auto">
+            <button id="btn-back-catalog" class="mb-8 md:mb-12 inline-flex items-center gap-3 text-obsidian-950 hover:text-gold-600 transition-all font-extrabold uppercase tracking-[0.2em] text-xs bg-white px-8 py-4 rounded-full border border-stone-200 shadow-md font-sans">
+                <i class="fas fa-arrow-left"></i> Regresar al Catálogo
+            </button>
+
+            <div class="bg-obsidian-950 text-white rounded-[3.5rem] shadow-2xl overflow-hidden grid md:grid-cols-2 gap-12 border border-gold-500/20 p-6 md:p-12">
+                
+                <!-- GALERÍA MULTIFOTO -->
+                <div class="flex flex-col gap-6">
+                    <div class="product-image-container h-[450px] md:h-[580px] w-full rounded-[2.5rem] bg-obsidian-900 border border-white/10 p-4 relative flex items-center justify-center overflow-hidden">
+                        <img id="detail-img" src="" alt="Detalle de Producto" 
+                             class="max-h-full max-w-full object-contain transition-all duration-500 hover:scale-105">
+                    </div>
+
+                    <div class="flex gap-4 overflow-x-auto pb-2 no-scrollbar" id="detail-thumbnails"></div>
+                </div>
+
+                <!-- ESPECIFICACIONES & SELECTOR DE TALLAS -->
+                <div class="flex flex-col justify-center py-2 md:py-6">
+                    <div class="flex gap-3 mb-6 font-sans">
+                        <span id="detail-gender" class="bg-gold-500 text-obsidian-950 font-black uppercase tracking-widest text-[10px] px-4 py-1.5 rounded-full">Género</span>
+                        <span id="detail-category" class="bg-white/10 text-stone-200 font-bold uppercase tracking-widest text-[10px] px-4 py-1.5 rounded-full border border-white/10">Categoría</span>
+                    </div>
+
+                    <h2 id="detail-name" class="text-4xl md:text-6xl font-editorial italic mb-6 text-stone-100 leading-tight">Nombre</h2>
+                    <p id="detail-price" class="price-tag text-3xl md:text-5xl font-extrabold text-gold-500 mb-8">$0.00</p>
+
+                    <!-- SELECTOR INTERACTIVO DE TALLAS -->
+                    <div class="mb-8 font-sans">
+                        <div class="flex justify-between items-center mb-3">
+                            <h4 class="font-extrabold text-stone-400 uppercase text-[10px] tracking-[0.25em]">Selecciona tu Talla</h4>
+                            <span id="selected-size-label" class="text-xs text-gold-500 font-bold">Ninguna seleccionada</span>
+                        </div>
+                        <div id="detail-sizes-container" class="flex flex-wrap gap-2"></div>
+                    </div>
+                    
+                    <div class="space-y-8 mb-10 font-sans">
+                        <div>
+                            <h4 class="font-extrabold text-stone-400 uppercase text-[10px] tracking-[0.25em] mb-4 border-b border-white/10 pb-2">Especificaciones de Prenda</h4>
+                            <p id="detail-desc" class="text-stone-300 text-base md:text-lg leading-relaxed font-normal"></p>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col gap-4 font-sans">
+                        <a href="#" id="whatsapp-link" target="_blank" rel="noopener noreferrer" class="btn-shimmer bg-green-600 hover:bg-green-700 text-white font-extrabold py-5 rounded-2xl shadow-2xl transition-all flex items-center justify-center gap-3 text-xs uppercase tracking-widest active:scale-95">
+                            <i class="fab fa-whatsapp text-2xl"></i> Coordinar Pedido VIP por WhatsApp
+                        </a>
+                        <button id="btn-close-detail" class="bg-obsidian-900 hover:bg-obsidian-800 text-stone-300 font-extrabold py-5 rounded-2xl transition-all uppercase tracking-widest text-xs border border-white/10">
+                            Cerrar y Continuar Explorando
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-obsidian-950 text-white py-24 px-6 border-t border-white/10 text-center font-sans">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-center gap-3 mb-6">
+                <i class="fas fa-gem text-gold-500 text-2xl"></i>
+                <span class="font-editorial font-bold text-4xl uppercase tracking-[0.2em] italic">KRONOS</span>
+            </div>
+            <p class="text-stone-300 text-base mb-12 max-w-md mx-auto italic font-editorial">
+                Haute Couture, Limited Sneakers & Fashion Atelier.
+            </p>
+
+            <p class="text-[10px] text-stone-500 uppercase tracking-[0.5em] font-extrabold">
+                © 2026 KRONOS Atelier Inc. Todos los derechos reservados.
+            </p>
+        </div>
+    </footer>
+
+    <!-- CARGA DE MOTOR COMO MÓDULO ES6 -->
+    <script type="module" src="app.js"></script>
+</body>
+</html>
